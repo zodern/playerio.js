@@ -7,7 +7,7 @@ var playerToken = '';
 var host = 'api.playerio.com';
 var basePath = '/api/';
 
-httpChannel.request = function(method, data, successMessage, errorMessage, successCallback, errorCallback) {
+httpChannel.request = function(method, request, successMessage, errorMessage, successCallback, errorCallback) {
 	var options = {
 		host: host,
 		path: basePath + method,
@@ -19,22 +19,31 @@ httpChannel.request = function(method, data, successMessage, errorMessage, succe
 	}
 
 	var req = http.request(options, function(res) {
+		res.setEncoding('utf8');
+		
 		var body = '';
 		res.on("data", function (c) {
 			body += c;
 		});
 		
 		res.on("end", function () {
-			var buffer = new Buffer(body);	
-			console.log(buffer);		
-			var result = buffer.readInt8(0);
+			var pointer = 0;
+			var buffer = new Buffer(body);
+			var hasToken = buffer.readInt8(pointer++);
+			if (hasToken == 1) {
+				var length = buffer.readInt16BE(pointer); pointer += 2;
+				playerToken = buffer.toString('utf-8', pointer, length); pointer += length;
+			}
+			var result = buffer.readInt8(pointer++);
+			
+			var data = buffer.slice(pointer);
 			if (result == 0) {
-				successCallback(successMessage.decode(buffer, 1));
+				successCallback(successMessage.decode(data));
 			} else if (result == 1) {
-				errorCallback(errorMessage.decode(buffer, 1));
+				errorCallback(errorMessage.decode(data));
 			}
 		});
 	});	
-	req.write(data);
+	req.write(request);
 	req.end();
 };
