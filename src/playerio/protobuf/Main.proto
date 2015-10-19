@@ -1,22 +1,4 @@
-// This file contains every used protocol buffer
-//import public "JoinRoom.proto";
-//import public "KeyValuePair.proto";
-//import public "PlayerInsightState.proto";
-//import public "PlayerIOError.proto";
-//import public "ServerEndpoint.proto";
-//import public "SimpleConnect.proto";
-
-message JoinRoomArgs {
-	optional string roomId = 1;
-	repeated KeyValuePair joinData = 2;
-	optional bool isDevRoom = 3;
-}
-
-message JoinRoomOutput {
-	optional string joinKey = 1;
-	repeated ServerEndpoint endpoints = 2;
-}
-
+// Classes
 message KeyValuePair {
 	optional string key = 1;
 	optional string value = 2;
@@ -27,16 +9,12 @@ message PlayerInsightState {
 	repeated KeyValuePair segments = 2;
 }
 
-message PlayerIOError {
-	optional int32 errorCode = 1;
-	optional string message = 2;
-}
-
 message ServerEndpoint {
 	optional string address = 1;
 	optional int32 port = 2;
 }
 
+// SimpleConnect
 message SimpleConnectArgs {
 	optional string gameId = 1;
 	optional string usernameOrEmail = 2;
@@ -52,4 +30,23 @@ message SimpleConnectOutput {
 	optional bool showBranding = 3;
 	optional string gameFSRedirectMap = 4;
 	optional string partnerId = 5;
+}
+
+// JoinRoom
+message JoinRoomArgs {
+	optional string roomId = 1;
+	repeated KeyValuePair joinData = 2;
+	optional bool isDevRoom = 3;
+}
+
+message JoinRoomOutput {
+	optional string joinKey = 1;
+	repeated ServerEndpoint endpoints = 2;
+}
+
+
+// Exceptions
+message PlayerIOError {
+	optional int32 errorCode = 1;
+	optional string message = 2;
 }

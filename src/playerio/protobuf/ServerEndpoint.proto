@@ -1,4 +1,0 @@
-message ServerEndpoint {
-	optional string address = 1;
-	optional int32 port = 2;
-}

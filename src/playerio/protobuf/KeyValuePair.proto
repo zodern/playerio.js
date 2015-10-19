@@ -1,4 +1,0 @@
-message KeyValuePair {
-	optional string key = 1;
-	optional string value = 2;
-}
