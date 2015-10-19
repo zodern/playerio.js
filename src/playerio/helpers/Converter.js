@@ -1,7 +1,7 @@
 /* @flow */
 
-import messages from './messages';
-import PlayerIOError from './PlayerIOError';
+import PlayerIOError from './models/PlayerIOError';
+import ProtobufMessages from './models/ProtobufMessages';
 
 export default class Converter {
 	static toKeyValuePairs(obj) {
@@ -9,7 +9,7 @@ export default class Converter {
 		for (let key in obj) {
 			if (obj.hasOwnProperty(key)) {
 				let value = obj[key];
-				arr.push(new messages.KeyValuePair({
+				arr.push(new ProtobufMessages.KeyValuePair({
 					key: key,
 					value: value
 				}))

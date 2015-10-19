@@ -1,0 +1,4 @@
+message PlayerIOError {
+	optional int32 errorCode = 1;
+	optional string message = 2;
+}

@@ -1,0 +1,7 @@
+// This file contains every used protocol buffer
+import public "JoinRoom.proto";
+import public "KeyValuePair.proto";
+import public "PlayerInsightState.proto";
+import public "PlayerIOError.proto";
+import public "ServerEndpoint.proto";
+import public "SimpleConnect.proto";

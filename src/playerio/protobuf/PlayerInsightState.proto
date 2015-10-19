@@ -1,0 +1,4 @@
+message PlayerInsightState {
+	optional int32 playersOnline = 1;
+	repeated KeyValuePair segments = 2;
+}
