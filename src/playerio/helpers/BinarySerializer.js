@@ -1,8 +1,8 @@
 /* global Buffer */
 var util = require('util'),
 	events = require('events'),
-	Message = require('./Message'),
-	ByteBuffer = require("bytebuffer");
+	Message = require('./../models/Message'),
+	ByteBuffer = require('bytebuffer');
 
 var StringShortPattern = 0xC0;
 var StringPattern = 0x0C;

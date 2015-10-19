@@ -1,9 +1,9 @@
 var util = require('util'),
 	events = require('events'),
 	WebSocket = require('ws'),
-	Message = require('./Message'),
-	PlayerIOError = require('./PlayerIOError'),
-	BinarySerializer = require('./BinarySerializer');
+	Message = require('./models/Message'),
+	PlayerIOError = require('./models/PlayerIOError'),
+	BinarySerializer = require('./helpers/BinarySerializer');
 
 function Connection(endpoint, joinKey, joinData) {
 	events.EventEmitter.call(this);

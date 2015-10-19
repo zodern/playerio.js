@@ -1,7 +1,7 @@
 /* @flow */
 
-import PlayerIOError from './models/PlayerIOError';
-import ProtobufMessages from './models/ProtobufMessages';
+import PlayerIOError from './../models/PlayerIOError';
+import ProtobufMessages from './../models/ProtobufMessages';
 
 export default class Converter {
 	static toKeyValuePairs(obj) {

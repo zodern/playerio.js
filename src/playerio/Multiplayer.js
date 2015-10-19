@@ -1,31 +1,38 @@
-var messages = require('./messages'),
-	converter = require('./converter'),
-	Connection = require('./Connection')
+/* @flow */
 
-function Multiplayer(channel) {	
-	this.joinRoom = function(roomId, joinData, successCallback, errorCallback) {
-		var args = messages.JoinRoomArgs.encode({
+import Connection from './Connection';
+import Converter from './helpers/Converter';
+import ProtobufMessages from './models/ProtobufMessages';
+
+export default class Multiplayer {
+	constructor(channel) {
+		this.channel = channel;
+	}
+
+	joinRoom(roomId: string, joinData, successCallback, errorCallback) {
+		let args = ProtobufMessages.JoinRoomArgs.encode({
 			roomId: roomId,
-			joinData: converter.toKeyValuePairs(joinData),
+			joinData: Converter.toKeyValuePairs(joinData),
 			isDevRoom: false
 		});
-			
-		channel.request(24, args, messages.JoinRoomOutput, function(obj) {
-			var joinKey = obj.joinKey;
-			var endpoints = obj.endpoints;
-			var con = new Connection(getEndpoint(endpoints), joinKey, joinData);
-			con.on('connect', function () {
-				successCallback(con);
-			});
-			con.on('error', function () {
-				errorCallback(con.error);				
-			})
-		}, errorCallback);
+
+		this.channel.request(
+			24, args, ProtobufMessages.JoinRoomOutput,
+			function (obj) {
+				let endpoints = obj.endpoints;
+				let connection = new Connection(getEndpoint(endpoints), obj.joinKey, endpoints);
+				connection.on('connect', function () {
+					successCallback(connection);
+				});
+				connection.on('error', function () {
+					errorCallback(connection.error);
+				})
+			},
+			errorCallback
+		);
 	}
-	
-	function getEndpoint(endpoints) {
+
+	static getEndpoint(endpoints) {
 		return endpoints[0];
 	}
 }
-
-module.exports = Multiplayer;

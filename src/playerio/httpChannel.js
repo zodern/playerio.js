@@ -2,8 +2,8 @@
 
 /* global Buffer */
 import http from 'http';
-import messages from './messages';
-import converter from './converter';
+import messages from './models/ProtobufMessages';
+import converter from './helpers/Converter';
 
 var host = 'api.playerio.com';
 var basePath = '/api/';
