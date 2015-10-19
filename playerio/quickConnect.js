@@ -13,7 +13,7 @@ quickConnect.simpleConnect = function(gameId, usernameOrEmail, password, playerI
 		playerInsightSegments: playerInsightSegments
 	});
 		
-	HttpChannel.default.request(400, args, messages.SimpleConnectOutput, messages.PlayerIOError, function(obj) {
+	HttpChannel.default.request(400, args, messages.SimpleConnectOutput, function(obj) {
 		 var token = obj.token;
          var userId = obj.userId;
 		 successCallback(new Client(token, userId));

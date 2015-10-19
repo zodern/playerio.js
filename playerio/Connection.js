@@ -1,51 +1,64 @@
 var util = require('util'),
 	events = require('events'),
 	net = require('net'),
-	Message = require('./Message')
-	PlayerIOError = require('./PlayerIOError');
+	Message = require('./Message'),
+	PlayerIOError = require('./PlayerIOError'),
+	BinarySerializer = require('./BinarySerializer');
 
-var Connection = exports = module.exports = function Connection(endpoint, joinKey, joinData) {
+function Connection(endpoint, joinKey, joinData) {
 	events.EventEmitter.call(this);
+				
+	this.connected = false;
+	var that = this;
+	
+	var serializer = new BinarySerializer();
+	serializer.on('message', function (message) {
+		if (!that.connected && message.type == "playerio.joinresult") {
+			if (!message.item(0)) {
+				that.error = new PlayerIOError(message.item(1), message.item(2));
+				that.disconnect();
+			} else {
+				that.connected = true;
+				that.emit('connect');				
+			}
+		} else {
+			that.emit('message', message);
+		}
+	})
 		
-	this.on('message', onMessageHandler);
-		
-	var sock = new net.Socket();
-	sock.connect(endpoint.port, endpoint.host, function () {
-		this.connected = true;
-		
+	var sock = net.connect(endpoint.port, endpoint.address);
+	sock.on('connect', function () {
+		sock.write(new Buffer([0]));
 		var msg = new Message('join', [joinKey]);
 		for (var kv in joinData) {			
 			msg.add(kv.key);
 			msg.add(kv.value);
 		}
-		this.send(msg);
-	})
+		that.send(msg);
+	});
 	
-	sock.on('data', function (data) {
-		
+	sock.on('data', function (data) {		
+		serializer.addBytes(data);
 	});
 	
 	sock.on('close', function (close) {
-		this.connected = false;
-	});
-	
-	this.connected = false;
+		if (that.connected) {		
+			that.connected = false;
+			that.emit('disconnect');
+		} else {
+			that.error = that.error | new PlayerIOError(0, "Error connecting to server.");
+			that.emit('error');
+		}
+	});	
 	
 	this.send = function (message) {
-		
+		sock.write(BinarySerializer.serializeMessage(message));
 	}
 	
 	this.disconnect = function () {
-		this.connected = false;
 		this.sock.close();
-	}
-	
-	function onMessageHandler(message) {
-		if (message.type != "playerio.joinresult") return;
-		if (!message.item(0)) {
-			this.error = new PlayerIOError(message.item(1), message.item(2));
-		}
-		this.finishedConnecting = true;
-	}
+	}	
 }
 util.inherits(Connection, events.EventEmitter);
+
+module.exports = Connection;

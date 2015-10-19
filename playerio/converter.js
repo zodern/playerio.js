@@ -1,4 +1,5 @@
-var messages = require('./messages')
+var messages = require('./messages'),
+	PlayerIOError = require('./PlayerIOError')
 
 exports = module.exports = {
 	toKeyValuePairs: function (o) {
@@ -13,5 +14,8 @@ exports = module.exports = {
 			}
 		}
 		return arr;
+	},
+	toPlayerIOError: function (o) {
+		return new PlayerIOError(o.errorCode, o.message);
 	}
 }

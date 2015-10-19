@@ -1,10 +1,19 @@
-var http = require('http')
+/* global Buffer */
+var http = require('http'),
+	messages = require('./messages'),
+	converter = require('./converter')
 
 var host = 'api.playerio.com';
 var basePath = '/api/';
 
-var HttpChannel = exports = module.exports = function HttpChannel(playerToken) {	
-	this.request = function(method, request, successMessage, errorMessage, successCallback, errorCallback) {
+function HttpChannel(playerToken) {	
+	this.request = function(method, request, successMessage, successCallback, errorCallback) {
+		this.customRequest(method, request, successMessage, messages.PlayerIOError, successCallback, function (err) {
+			errorCallback(converter.toPlayerIOError(err));
+		})
+	}
+	
+	this.customRequest = function(method, request, successMessage, errorMessage, successCallback, errorCallback) {
 		var options = {
 			host: host,
 			path: basePath + method,
@@ -15,19 +24,19 @@ var HttpChannel = exports = module.exports = function HttpChannel(playerToken) {
 			}
 		}
 	
-		var req = http.request(options, function(res) {		
-			var body = '';
+		var req = http.request(options, function(res) {
+			var data = [];
 			res.on("data", function (c) {
-				body += c;
+				data.push(c);
 			});
 			
 			res.on("end", function () {
-				var buffer = new Buffer(body);	
-				res = readHead(buffer);		
+				var buffer = Buffer.concat(data);	
+				res = readHead(buffer);	
 				if (res.success) {
-					successCallback(successMessage.decode(res.buffer));
+					successCallback(successMessage.decode(buffer, res.offset));
 				} else {
-					errorCallback(errorMessage.decode(res.buffer));
+					errorCallback(errorMessage.decode(buffer, res.offset));
 				}
 			});
 		});	
@@ -46,9 +55,11 @@ var HttpChannel = exports = module.exports = function HttpChannel(playerToken) {
 		}
 		return {
 			success: buffer.readInt8(pointer++) == 1,
-			buffer: buffer.slice(pointer)
+			offset: pointer
 		}
 	}
 }
 
 HttpChannel.default = new HttpChannel('');
+
+module.exports = HttpChannel;

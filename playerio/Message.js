@@ -1,4 +1,4 @@
-var Message = exports = module.exports = function Message(msgType, contents) {
+function Message(msgType, contents) {
 	this.type = msgType;	
 	this.contents = contents || [];
 	
@@ -16,7 +16,7 @@ var Message = exports = module.exports = function Message(msgType, contents) {
 			this.add(item);
 	}
 	
-	this.length = function () {
+	this.getLength = function () {
 		return this.contents.length;
 	}
 	
@@ -24,3 +24,5 @@ var Message = exports = module.exports = function Message(msgType, contents) {
 		return this.contents.toString();
 	}
 }
+
+module.exports = Message;

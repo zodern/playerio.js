@@ -2,17 +2,24 @@ var messages = require('./messages'),
 	converter = require('./converter'),
 	Connection = require('./Connection')
 
-var Multiplayer = exports = module.exports = function Multiplayer(channel) {	
+function Multiplayer(channel) {	
 	this.joinRoom = function(roomId, joinData, successCallback, errorCallback) {
 		var args = messages.JoinRoomArgs.encode({
 			roomId: roomId,
-			joinData: converter.toKeyValuePairs(joinData)
+			joinData: converter.toKeyValuePairs(joinData),
+			isDevRoom: false
 		});
 			
-		channel.request(24, args, messages.JoinRoomOutput, messages.PlayerIOError, function(obj) {
+		channel.request(24, args, messages.JoinRoomOutput, function(obj) {
 			var joinKey = obj.joinKey;
 			var endpoints = obj.endpoints;
-			successCallback(new Connection(getEndpoint(endpoints), joinKey, joinData));
+			var con = new Connection(getEndpoint(endpoints), joinKey, joinData);
+			con.on('connect', function () {
+				successCallback(con);
+			});
+			con.on('error', function () {
+				errorCallback(con.error);				
+			})
 		}, errorCallback);
 	}
 	
@@ -20,3 +27,5 @@ var Multiplayer = exports = module.exports = function Multiplayer(channel) {
 		return endpoints[0];
 	}
 }
+
+module.exports = Multiplayer;
