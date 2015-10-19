@@ -1,21 +1,24 @@
-var quickConnect = exports;
+/* @flow */
 
-var client = require('./client'),
-	messages = require('./messages'),
-	HttpChannel = require('./HttpChannel'),
-	Client = require('./Client')
+import Client from './client';
+import messages from './messages';
+import HttpChannel from './HttpChannel';
 
-quickConnect.simpleConnect = function(gameId, usernameOrEmail, password, playerInsightSegments, successCallback, errorCallback) {
-	var args = messages.SimpleConnectArgs.encode({
-		gameId: gameId,
-		usernameOrEmail: usernameOrEmail,
-		password: password,
-		playerInsightSegments: playerInsightSegments
-	});
-		
-	HttpChannel.default.request(400, args, messages.SimpleConnectOutput, function(obj) {
-		 var token = obj.token;
-         var userId = obj.userId;
-		 successCallback(new Client(token, userId));
-	}, errorCallback);
+export default class QuickConnect {
+	static simpleConnect(gameId: string, usernameOrEmail: string, password: string, playerInsightSegments, successCallback, errorCallback) {
+		let args = messages.SimpleConnectArgs.encode({
+			gameId: gameId,
+			usernameOrEmail: usernameOrEmail,
+			password: password,
+			playerInsightSegments: playerInsightSegments
+		});
+
+		HttpChannel.default.request(
+			400, args, messages.SimpleConnectOutput,
+			function(obj) {
+				successCallback(new Client(obj.token, obj.userId));
+			},
+			errorCallback
+		);
+	}
 }

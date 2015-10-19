@@ -1,6 +1,8 @@
-function PlayerIOError(code, message) {	
-	this.code = code;
-	this.message = message;
-}
+/* @flow */
 
-module.exports = PlayerIOError;
+export default class PlayerIOError {
+	constructor(code, message) {
+		this.code = code;
+		this.message = message;
+	}
+}

@@ -1,28 +1,21 @@
-function Message(msgType, contents) {
-	this.type = msgType;	
-	this.contents = contents || [];
-	
-	this.add = function (o) {
-		// TODO: Check type
-		this.contents.push(o);
+/* @flow */
+
+export default class Message {
+	constructor(type: string, items: Array<string | Buffer | number> = []) {
+		this.type = type;
+		this.items = items;
 	}
-	
-	this.item = function (index) {
-		return contents[index];
+
+	add(...items: Array<string | Buffer | number>) {
+		// TODO: Check types
+		this.items.push(...items);
 	}
-	
-	this.addItems = function (os) {
-		for (var item in os)
-			this.add(item);
+
+	getLength() {
+		return this.items.length;
 	}
-	
-	this.getLength = function () {
-		return this.contents.length;
-	}
-	
-	this.toString = function () {
-		return this.contents.toString();
+
+	toString() {
+		return this.items.toString();
 	}
 }
-
-module.exports = Message;

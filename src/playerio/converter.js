@@ -1,12 +1,14 @@
-var messages = require('./messages'),
-	PlayerIOError = require('./PlayerIOError')
+/* @flow */
 
-exports = module.exports = {
-	toKeyValuePairs: function (o) {
-		var arr = [];
-		for (var key in o) {
-			if (o.hasOwnProperty(key)) {
-				var value = o[key];
+import messages from './messages';
+import PlayerIOError from './PlayerIOError';
+
+export default class Converter {
+	static toKeyValuePairs(obj) {
+		let arr = [];
+		for (let key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				let value = obj[key];
 				arr.push(new messages.KeyValuePair({
 					key: key,
 					value: value
@@ -14,8 +16,9 @@ exports = module.exports = {
 			}
 		}
 		return arr;
-	},
-	toPlayerIOError: function (o) {
-		return new PlayerIOError(o.errorCode, o.message);
+	}
+
+	static toPlayerIOError(obj) {
+		return new PlayerIOError(obj.errorCode, obj.message);
 	}
 }

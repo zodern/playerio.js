@@ -1,7 +1,9 @@
+/* @flow */
+
 /* global Buffer */
-var http = require('http'),
-	messages = require('./messages'),
-	converter = require('./converter')
+import http from 'http';
+import messages from './messages';
+import converter from './converter';
 
 var host = 'api.playerio.com';
 var basePath = '/api/';
