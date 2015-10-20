@@ -28,7 +28,7 @@ function Connection(endpoint, joinKey, joinData) {
 	
 	var sock = new WebSocket('ws://' + endpoint.address + ':' + endpoint.port + '/');
 	sock.on('open', function () {
-		var msg = new Message('join', [joinKey]);
+		var msg = new Message('join', joinKey);
 		for (var kv in joinData) {			
 			msg.add(kv.key);
 			msg.add(kv.value);

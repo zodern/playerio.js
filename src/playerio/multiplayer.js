@@ -20,14 +20,11 @@ export default class Multiplayer {
 			24, args, ProtobufMessages.JoinRoomOutput,
 			function (obj) {
 				let endpoints = obj.endpoints;
-				console.log(Multiplayer.getEndpoint(endpoints));
-				let connection = new Connection(Multiplayer.getEndpoint(endpoints), obj.joinKey, endpoints);
+				let connection = new Connection(Multiplayer.getEndpoint(endpoints), obj.joinKey, joinData);
 				connection.on('connect', function () {
-					console.log('success');
 					successCallback(connection);
 				});
 				connection.on('error', function () {
-					console.log(connection.error);
 					errorCallback(connection.error);
 				})
 			},

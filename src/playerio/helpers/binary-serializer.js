@@ -144,7 +144,7 @@ function BinarySerializer() {
 		if (count == -1) {
 			count = value;
 		} else if (!currMsg) {
-			currMsg = new Message(value, []);
+			currMsg = new Message(value);
 		} else {
 			currMsg.add(value);			
 		}

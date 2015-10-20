@@ -29,7 +29,7 @@ function Connection(endpoint, joinKey, joinData) {
 	var sock = net.connect(endpoint.port, endpoint.address);
 	sock.on('connect', function () {
 		sock.write(new Buffer([0]));
-		var msg = new Message('join', [joinKey]);
+		var msg = new Message('join', joinKey);
 		for (var kv in joinData) {
 			msg.add(kv.key);
 			msg.add(kv.value);
