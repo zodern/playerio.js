@@ -1,9 +1,9 @@
 /* @flow */
 
 export default class Message {
-	constructor(type: string, items: Array<string | Buffer | number> = []) {
+	constructor(type: string, ...items: Array<string | Buffer | number>) {
 		this.type = type;
-		this.items = items;
+		this.items = ...items;
 	}
 
 	add(...items: Array<string | Buffer | number>) {

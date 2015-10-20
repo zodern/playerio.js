@@ -1,9 +1,9 @@
 var util = require('util'),
 	events = require('events'),
 	WebSocket = require('ws'),
-	Message = require('./models/Message'),
-	PlayerIOError = require('./models/PlayerIOError'),
-	BinarySerializer = require('./helpers/BinarySerializer');
+	Message = require('./models/message'),
+	PlayerIOError = require('./models/playerio-error'),
+	BinarySerializer = require('./helpers/binary-serializer');
 
 function Connection(endpoint, joinKey, joinData) {
 	events.EventEmitter.call(this);
@@ -14,8 +14,8 @@ function Connection(endpoint, joinKey, joinData) {
 	var serializer = new BinarySerializer();
 	serializer.on('message', function (message) {
 		if (!that.connected && message.type == "playerio.joinresult") {
-			if (!message.item(0)) {
-				that.error = new PlayerIOError(message.item(1), message.item(2));
+			if (!message.items[0]) {
+				that.error = new PlayerIOError(message.items[1], message.items[2]);
 				that.disconnect();
 			} else {
 				that.connected = true;

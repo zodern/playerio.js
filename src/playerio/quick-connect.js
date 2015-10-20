@@ -1,8 +1,8 @@
 /* @flow */
 
-import Client from './Client';
-import HttpChannel from './HttpChannel';
-import ProtobufMessages from './models/ProtobufMessages';
+import Client from './client';
+import HttpChannel from './http-channel';
+import ProtobufMessages from './models/protobuf-messages';
 
 export default class QuickConnect {
 	static simpleConnect(gameId: string, usernameOrEmail: string, password: string, playerInsightSegments, successCallback, errorCallback) {

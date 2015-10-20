@@ -1,7 +1,7 @@
 /* @flow */
 
-import QuickConnect from './QuickConnect';
-import Message from './models/Message';
+import QuickConnect from './quick-connect';
+import Message from './models/message';
 
 /**
  * The main Player.IO object which acts as the base of method execution.

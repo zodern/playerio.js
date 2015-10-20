@@ -1,7 +1,7 @@
 /* @flow */
 
-import HttpChannel from './HttpChannel';
-import Multiplayer from './Multiplayer';
+import HttpChannel from './http-channel';
+import Multiplayer from './multiplayer';
 
 export default class Client {
 	constructor(token, connectUserId) {

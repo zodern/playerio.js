@@ -1,7 +1,7 @@
 /* global Buffer */
 var util = require('util'),
 	events = require('events'),
-	Message = require('./../models/Message'),
+	Message = require('./../models/message'),
 	ByteBuffer = require('bytebuffer');
 
 var StringShortPattern = 0xC0;
@@ -177,7 +177,7 @@ BinarySerializer.serializeMessage = function (message) {
 	buf.append(serializeValue(message.getLength()));
 	buf.append(serializeValue(message.type));
 	for (var i = 0; i < message.getLength(); i++)
-		buf.append(serializeValue(message.item(i)));
+		buf.append(serializeValue(message.items[i]));
 	buf.flip();
 	return buf.toBuffer();
 }
