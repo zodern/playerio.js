@@ -1,67 +1,72 @@
 /* @flow */
 
-/* global Buffer */
 import http from 'http';
 import messages from './models/protobuf-messages';
 import converter from './helpers/converter';
 
-var host = 'api.playerio.com';
-var basePath = '/api/';
+const HOST = 'api.playerio.com';
+const BASE_PATH = '/api/';
 
-function HttpChannel(playerToken) {	
-	this.request = function(method, request, successMessage, successCallback, errorCallback) {
+export default class HttpChannel {
+	constructor(playerToken) {
+		this.playerToken = playerToken;
+	}
+
+	request(method, request, successMessage, successCallback, errorCallback) {
+		// Always use PlayerIOError as an errorMessage
 		this.customRequest(method, request, successMessage, messages.PlayerIOError, successCallback, function (err) {
 			errorCallback(converter.toPlayerIOError(err));
 		})
 	}
-	
-	this.customRequest = function(method, request, successMessage, errorMessage, successCallback, errorCallback) {
-		var options = {
-			host: host,
-			path: basePath + method,
+
+	customRequest(method, request, successMessage, errorMessage, successCallback, errorCallback) {
+		let options = {
+			host: HOST,
+			path: BASE_PATH + method,
 			method: 'POST',
-			headers: {			
+			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
-				'playertoken': playerToken
+				'playertoken': this.playerToken
 			}
 		}
-	
-		var req = http.request(options, function(res) {
-			var data = [];
-			res.on("data", function (c) {
-				data.push(c);
+
+		let req = http.request(options, function (res) {
+			let data = [];
+			res.on('data', function (obj) {
+				data.push(obj);
 			});
-			
-			res.on("end", function () {
-				var buffer = Buffer.concat(data);	
-				res = readHead(buffer);	
+
+			res.on('end', function () {
+				let buffer = Buffer.concat(data);
+				res = HttpChannel._readHead(buffer);
 				if (res.success) {
 					successCallback(successMessage.decode(buffer, res.offset));
 				} else {
 					errorCallback(errorMessage.decode(buffer, res.offset));
 				}
 			});
-		});	
+		});
+
 		req.write(request);
-		req.end();	
+		req.end();
 	}
-	
-	function readHead(buffer) {
-		var pointer = 0;
-		var hasToken = buffer.readInt8(pointer++);
-		if (hasToken == 1) {
-			var length = buffer.readInt16BE(pointer); 
+
+	static _readHead(buffer) {
+		let pointer = 0;
+		let hasToken = buffer.readInt8(pointer++);
+
+		if (hasToken === 1) {
+			let length = buffer.readInt16BE(pointer);
 			pointer += 2;
-			playerToken = buffer.toString('utf-8', pointer, length); 
+			playerToken = buffer.toString('utf-8', pointer, length);
 			pointer += length;
 		}
+
 		return {
-			success: buffer.readInt8(pointer++) == 1,
+			success: buffer.readInt8(pointer++) === 1,
 			offset: pointer
-		}
+		};
 	}
 }
 
 HttpChannel.default = new HttpChannel('');
-
-module.exports = HttpChannel;
