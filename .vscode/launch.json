@@ -5,6 +5,7 @@
             "name": "Launch type",
             "type": "node",
             "program": "src/app.js",
+            "cwd": "./src",
             "stopOnEntry": false,
             "sourceMaps": true,
             "outDir": "bin"
