@@ -2,7 +2,12 @@
   "name": "eejs",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "repository": "Yonom/playerio.js",
+  "main": "lib/playerio.js",
+  "directories": {
+    "lib": "./lib",
+    "example": "./example"
+  },
   "dependencies": {
     "babel": "^5.8.23",
     "bytebuffer": "^4.0.0",
@@ -13,7 +18,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "cd src && node app.js"
+    "start": "cd example && node server.js"
   },
   "author": "",
   "license": "MIT"

@@ -2,10 +2,10 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch type",
+            "name": "Launch example",
             "type": "node",
-            "program": "src/app.js",
-            "cwd": "./src",
+            "program": "example/server.js",
+            "cwd": "./example",
             "stopOnEntry": false,
             "sourceMaps": true,
             "outDir": "bin"

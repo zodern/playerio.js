@@ -1,7 +1,7 @@
 /* @flow */
 
 import readline from 'readline';
-import PlayerIO from './playerio/playerio';
+import PlayerIO from './../lib/playerio';
 
 let rl = readline.createInterface({
 	input: process.stdin,
