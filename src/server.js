@@ -1,3 +1,5 @@
+/* @flow */
+
 import readline from 'readline';
 import PlayerIO from './playerio/playerio';
 
@@ -8,7 +10,7 @@ let rl = readline.createInterface({
 });
 
 PlayerIO.QuickConnect.simpleConnect('everybody-edits-su9rn58o40itdbnw69plyw', 'guest1@tbp.com', 'guest', null, function (client) {
-	client.multiplayer.joinRoom('PWAJwkxnxta0I', null, function (connection) {
+	client.multiplayer.createJoinRoom('PWAJwkxnxta0I', 'Everybodyedits201', true, null, null, false, function (connection: Connection) {
 		connection.on('message', function (m) {
 			if (m.type === 'init') {
 				// Allow custom chat messages to be sent
@@ -21,7 +23,7 @@ PlayerIO.QuickConnect.simpleConnect('everybody-edits-su9rn58o40itdbnw69plyw', 'g
 
 		connection.send(new PlayerIO.Message('init'));
 
-	}, function (playerIOError) {
-		console.log(playerIOError);
+	}, function (error: ?PlayerIOError) {
+		console.log(error);
 	});
 });

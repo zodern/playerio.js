@@ -14,6 +14,7 @@ message ServerEndpoint {
 	optional int32 port = 2;
 }
 
+
 // SimpleConnect
 message SimpleConnectArgs {
 	optional string gameId = 1;
@@ -31,6 +32,24 @@ message SimpleConnectOutput {
 	optional string gameFSRedirectMap = 4;
 	optional string partnerId = 5;
 }
+
+
+// CreateJoinRoom
+message CreateJoinRoomArgs {
+	optional string roomId = 1;
+	optional string roomType = 2;
+	optional bool visible = 3;
+	repeated KeyValuePair roomData = 4;
+	repeated KeyValuePair joinData = 5;
+	optional bool isDevRoom = 6;
+}
+
+message CreateJoinRoomOutput {
+	optional string roomId = 1;
+	optional string joinKey = 2;
+	repeated ServerEndpoint endpoints = 3;
+}
+
 
 // JoinRoom
 message JoinRoomArgs {

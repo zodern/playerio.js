@@ -7,21 +7,22 @@ import PlayerIOError from './models/playerio-error';
 import BinarySerializer from './helpers/binary-serializer';
 
 export default class Connection extends EventEmitter {
-	constructor(endpoint, joinKey, joinData) {
+	constructor(endpoint: ServerEndpoint, joinKey: string, joinData: any, roomId: string) {
 		super();
 
-		this.connected = false;
+		this.isConnected = false;
+		this.roomId = roomId;
 
 		let self = this;
 		let serializer = new BinarySerializer();
 
 		serializer.on('message', function (message) {
-			if (!self.connected && message.type === 'playerio.joinresult') {
+			if (!self.isConnected && message.type === 'playerio.joinresult') {
 				if (!message.items[0]) {
 					self.error = new PlayerIOError(message.items[1], message.items[2]);
 					self.disconnect();
 				} else {
-					self.connected = true;
+					self.isConnected = true;
 					self.emit('connect');
 				}
 
@@ -48,8 +49,8 @@ export default class Connection extends EventEmitter {
 		});
 
 		sock.on('close', function (close) {
-			if (self.connected) {
-				self.connected = false;
+			if (self.isConnected) {
+				self.isConnected = false;
 				self.emit('disconnect');
 			} else {
 				self.error = self.error | new PlayerIOError(0, 'Error connecting to server.');
