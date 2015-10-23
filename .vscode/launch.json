@@ -4,7 +4,7 @@
         {
             "name": "Launch example",
             "type": "node",
-            "program": "example/server.js",
+            "program": "./example/server.js",
             "cwd": "./example",
             "stopOnEntry": false,
             "sourceMaps": true,
