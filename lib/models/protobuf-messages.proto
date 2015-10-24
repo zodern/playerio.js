@@ -34,6 +34,33 @@ message SimpleConnectOutput {
 }
 
 
+// CreateRoom
+message CreateRoomArgs {
+	optional string roomId = 1;
+	optional string roomType = 2;
+	optional bool visible = 3;
+	repeated KeyValuePair roomData = 4;
+	optional bool isDevRoom = 5;
+}
+
+message CreateRoomOutput {
+	optional string roomId = 1;
+}
+
+
+// JoinRoom
+message JoinRoomArgs {
+	optional string roomId = 1;
+	repeated KeyValuePair joinData = 2;
+	optional bool isDevRoom = 3;
+}
+
+message JoinRoomOutput {
+	optional string joinKey = 1;
+	repeated ServerEndpoint endpoints = 2;
+}
+
+
 // CreateJoinRoom
 message CreateJoinRoomArgs {
 	optional string roomId = 1;
@@ -48,19 +75,6 @@ message CreateJoinRoomOutput {
 	optional string roomId = 1;
 	optional string joinKey = 2;
 	repeated ServerEndpoint endpoints = 3;
-}
-
-
-// JoinRoom
-message JoinRoomArgs {
-	optional string roomId = 1;
-	repeated KeyValuePair joinData = 2;
-	optional bool isDevRoom = 3;
-}
-
-message JoinRoomOutput {
-	optional string joinKey = 1;
-	repeated ServerEndpoint endpoints = 2;
 }
 
 
