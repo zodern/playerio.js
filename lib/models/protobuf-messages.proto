@@ -78,6 +78,48 @@ message CreateJoinRoomOutput {
 }
 
 
+// BigDB
+message ValueObject {
+	optional enum valueType = 1;
+	optional string string = 2;
+	optional int32 int32 = 3;
+	optional uint32 uInt = 4;
+	optional int64 long = 5;
+	optional bool bool = 6;
+	optional float float = 7;
+	optional double double = 8;
+	optional bytes byteArray = 9;
+	optional int64 dateTime = 10;
+	repeated ArrayProperty arrayProperties = 11;
+	repeated ObjectProperty objectProperties = 12;
+}
+
+message ObjectProperty {
+	optional string name = 1;
+	optional ValueObject value = 2;
+}
+
+message ArrayProperty {
+	optional int32 index = 1;
+	optional ValueObject value = 2;
+}
+
+message BigDBObject {
+	optional string key = 1;
+	optional string version = 2;
+	repeated ObjectProperty properties = 3;
+	optional uint32 creator = 4;
+}
+
+message LoadMyPlayerObjectArgs {
+	
+}
+
+message LoadMyPlayerObjectOutput {
+    optional BigDBObject playerObject = 1;
+}
+
+
 // Exceptions
 message PlayerIOError {
 	optional int32 errorCode = 1;

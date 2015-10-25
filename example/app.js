@@ -11,6 +11,13 @@ let rl = readline.createInterface({
 });
 
 PlayerIO.QuickConnect.simpleConnect('everybody-edits-su9rn58o40itdbnw69plyw', 'guest1@tbp.com', 'guest', null, function (client) {
+	client.bigDB.loadMyPlayerObject(function (playerObject) {
+		console.log('BigDB - Current PlayerObject:')
+		console.log(playerObject);
+	}, function (error) {
+		console.log(error);
+	});
+
 	client.multiplayer.createJoinRoom('PWAJwkxnxta0I', 'Everybodyedits201', true, null, null, false, function (connection) {
 		connection.on('message', function (m) {
 			if (m.type === 'init') {
