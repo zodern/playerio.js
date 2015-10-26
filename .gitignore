@@ -1,6 +1,7 @@
 # Project-specific
 ## Generated resources
 bin/
+esdoc/
 
 # Web development
 ## Package managers
