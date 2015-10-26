@@ -34,6 +34,40 @@ message SimpleConnectOutput {
 }
 
 
+// SimpleRegister
+message SimpleRegisterArgs {
+	optional string gameId = 1;
+	optional string username = 2;
+	optional string password = 3;
+	optional string email = 4;
+	repeated KeyValuePair extraData = 5;
+	optional string captchaKey = 6;
+	optional string captchaValue = 7;
+	optional string partnerId = 8;
+	repeated string playerInsightSegments = 9;
+	optional string clientAPI = 10;
+	repeated KeyValuePair clientInfo = 11;
+}
+
+message SimpleRegisterOutput {
+	optional string token = 1;
+	optional string userId = 2;
+	optional bool showBranding = 3;
+	optional string gameFSRedirectMap = 4;
+	optional string partnerId = 5;
+	optional PlayerInsightState playerInsightState = 6;
+}
+
+message SimpleRegisterError {
+	optional int32 errorCode = 1;
+	optional string message = 2;
+	optional string usernameError = 3;
+	optional string passwordError = 4;
+	optional string emailError = 5;
+	optional string captchaError = 6;
+}
+
+
 // CreateRoom
 message CreateRoomArgs {
 	optional string roomId = 1;
@@ -120,7 +154,14 @@ message LoadMyPlayerObjectOutput {
 }
 
 
-// Exceptions
+// PlayerInsight
+message PlayerInsightState {
+	optional int32 playersOnline = 1;
+	repeated KeyValuePair segments = 2;
+}
+
+
+// Generic exception
 message PlayerIOError {
 	optional int32 errorCode = 1;
 	optional string message = 2;
