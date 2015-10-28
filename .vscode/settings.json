@@ -1,0 +1,5 @@
+{
+  // Use ESLint instead of the integrated JS validator of Visual Studio Code
+  "eslint.enable": true,
+  "javascript.validate.enable": false
+}
