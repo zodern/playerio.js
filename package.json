@@ -19,13 +19,14 @@
     "browserify": "^12.0.1",
     "esdoc": "^0.4.1",
     "eslint": "^1.7.3",
+    "exorcist": "^0.4.0",
     "rimraf": "^2.4.3",
-    "uglifyify": "^3.0.1"
+    "uglify-js": "^2.5.0"
   },
   "scripts": {
     "start": "cd example && node server.js",
     "build-docs": "esdoc -c ./esdoc.json",
-    "bundle": "rimraf bin && mkdir bin && browserify lib/playerio.js -o bin/playerio.js -t babelify -t uglifyify"
+    "bundle": "rimraf bin && mkdir bin && cd bin && browserify ../lib/playerio.js -t babelify -d | exorcist playerio.js.map > playerio.js && uglifyjs playerio.js -o playerio.min.js --in-source-map playerio.js.map --source-map playerio.js.min.map"
   },
   "repository": {
     "type": "git",
