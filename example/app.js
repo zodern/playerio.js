@@ -1,8 +1,7 @@
-/* @flow */
 /* eslint no-console: 0 */
 
 import readline from 'readline';
-import PlayerIO from './../lib/playerio';
+import PlayerIO from './../lib';
 
 let rl = readline.createInterface({
 	input: process.stdin,
