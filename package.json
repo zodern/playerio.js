@@ -1,6 +1,6 @@
 {
   "name": "playerio.js",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "An open-source JavaScript library for leveraging client-side functionality of Player.IO.",
   "main": "lib/playerio.js",
   "directories": {
@@ -8,18 +8,18 @@
     "example": "./example"
   },
   "dependencies": {
+    "babel": "^5.8.29",
     "babel-core": "^6.0.14",
     "babel-preset-es2015": "^6.0.14",
-    "babelify": "^7.1.0",
     "bytebuffer": "^5.0.0",
     "protocol-buffers": "^3.1.3",
     "ws": "^0.8.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.3",
-    "babelify": "^7.0.2",
+    "babelify": "^6.4.0",
     "browserify": "^12.0.1",
-    "esdoc": "^0.4.1",
+    "esdoc": "^0.4.2",
     "eslint": "^1.7.3",
     "exorcist": "^0.4.0",
     "rimraf": "^2.4.3",

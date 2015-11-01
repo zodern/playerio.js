@@ -17,7 +17,7 @@ PlayerIO.QuickConnect.simpleConnect('everybody-edits-su9rn58o40itdbnw69plyw', 'g
 		console.log(error);
 	});
 
-	client.multiplayer.createJoinRoom('PWAJwkxnxta0I', 'Everybodyedits201', true, null, null, false, (connection) => {
+	client.multiplayer.createJoinRoom('PWAJwkxnxta0I', 'Everybodyedits201', true, null, null, (connection) => {
 		connection.on('message', (m) => {
 			if (m.type === 'init') {
 				// Allow custom chat messages to be sent
