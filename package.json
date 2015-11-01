@@ -1,8 +1,8 @@
 {
   "name": "playerio.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An open-source JavaScript library for leveraging client-side functionality of Player.IO.",
-  "main": "lib/playerio.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "./lib",
     "example": "./example"
