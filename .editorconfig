@@ -7,10 +7,6 @@ charset = utf-8
 insert_final_newline = true
 
 # Set the default indentation for file types
-[*.{js,proto,css,html}]
-indent_style = tab
-indent_size = 4
-
-[*.json]
+[*.{js,json,proto,html}]
 indent_style = space
 indent_size = 2
