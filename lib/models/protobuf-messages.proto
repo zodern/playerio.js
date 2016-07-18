@@ -14,7 +14,6 @@ message ServerEndpoint {
   optional int32 port = 2;
 }
 
-
 // SimpleConnect
 message SimpleConnectArgs {
   optional string gameId = 1;
@@ -32,7 +31,6 @@ message SimpleConnectOutput {
   optional string gameFSRedirectMap = 4;
   optional string partnerId = 5;
 }
-
 
 // SimpleRegister
 message SimpleRegisterArgs {
@@ -67,7 +65,6 @@ message SimpleRegisterError {
   optional string captchaError = 6;
 }
 
-
 // CreateRoom
 message CreateRoomArgs {
   optional string roomId = 1;
@@ -81,7 +78,6 @@ message CreateRoomOutput {
   optional string roomId = 1;
 }
 
-
 // JoinRoom
 message JoinRoomArgs {
   optional string roomId = 1;
@@ -93,7 +89,6 @@ message JoinRoomOutput {
   optional string joinKey = 1;
   repeated ServerEndpoint endpoints = 2;
 }
-
 
 // CreateJoinRoom
 message CreateJoinRoomArgs {
@@ -111,10 +106,34 @@ message CreateJoinRoomOutput {
   repeated ServerEndpoint endpoints = 3;
 }
 
-
 // BigDB
+
+enum valueType {
+  STRING = 0;
+  INT = 1;
+  UINT = 2;
+  LONG = 3;
+  BOOL = 4;
+  FLOAT = 5;
+  DOUBLe = 6;
+  BYTEARRAY = 7;
+  ARRAY = 9;
+  OBJ = 10;
+}
+
 message ValueObject {
-  optional enum valueType = 1;
+  enum valueType {
+    STRING = 0;
+    INT = 1;
+    UINT = 2;
+    LONG = 3;
+    BOOL = 4;
+    FLOAT = 5;
+    DOUBLe = 6;
+    BYTEARRAY = 7;
+    ARRAY = 9;
+    OBJ = 10;
+  }
   optional string string = 2;
   optional int32 int32 = 3;
   optional uint32 uInt = 4;
@@ -146,20 +165,18 @@ message BigDBObject {
 }
 
 message LoadMyPlayerObjectArgs {
-  
+
 }
 
 message LoadMyPlayerObjectOutput {
-    optional BigDBObject playerObject = 1;
+  optional BigDBObject playerObject = 1;
 }
-
 
 // PlayerInsight
-message PlayerInsightState {
-  optional int32 playersOnline = 1;
-  repeated KeyValuePair segments = 2;
-}
-
+//message PlayerInsightState {
+//  optional int32 playersOnline = 1;
+//  repeated KeyValuePair segments = 2;
+//}
 
 // Generic exception
 message PlayerIOError {
