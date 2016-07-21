@@ -78,6 +78,26 @@ message CreateRoomOutput {
   optional string roomId = 1;
 }
 
+// ListRooms
+message ListRoomsArgs {
+  optional string roomType = 1;
+  repeated KeyValuePair searchCriteria = 2;
+  optional int32 resultLimit = 3;
+  optional int32 resultOffset = 4;
+  optional bool onlyDevRooms = 5;
+}
+
+message ListRoomsOutput {
+  repeated RoomInfo rooms = 1;
+}
+
+message RoomInfo {
+  optional string id = 1;
+  optional string roomType = 2;
+  optional int32 onlineUsers = 3;
+  repeated KeyValuePair roomData = 4;
+}
+
 // JoinRoom
 message JoinRoomArgs {
   optional string roomId = 1;
