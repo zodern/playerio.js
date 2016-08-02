@@ -192,6 +192,29 @@ message LoadMyPlayerObjectOutput {
   optional BigDBObject playerObject = 1;
 }
 
+// PayVault
+message PayVaultRefreshArgs {
+  optional string lastVersion = 1;
+  optional string targetUserId = 2;
+}
+
+message PayVaultRefreshOutput {
+  optional PayVaultContents valueContents = 1;
+}
+
+message PayVaultContents {
+  optional string version = 1;
+  optional int32 coins = 2;
+  repeated PayVaultItem items = 3;
+}
+
+message PayVaultItem {
+  optional string id = 1;
+  optional string itemKey = 2;
+  optional int64 purchaseDate = 3;
+  repeated ObjectProperty properties = 4;
+}
+
 // PlayerInsight
 //message PlayerInsightState {
 //  optional int32 playersOnline = 1;
