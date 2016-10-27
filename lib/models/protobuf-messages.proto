@@ -196,6 +196,17 @@ message LoadMyPlayerObjectOutput {
   optional BigDBObject playerObject = 1;
 }
 
+message LoadMatchingObjectsArgs {
+  optional string table = 1;
+  optional string index = 2;
+  repeated ValueObject indexValue = 3;
+  optional int32 limit = 4;
+}
+
+message LoadMatchingObjectsOutput {
+  repeated BigDBObject objects = 1;
+}
+
 message LoadIndexRangeArgs {
   optional string table = 1;
   optional string index = 2;
@@ -237,6 +248,21 @@ message PayVaultItem {
   optional string itemKey = 2;
   optional int64 purchaseDate = 3;
   repeated ObjectProperty properties = 4;
+}
+
+message PayVaultPaymentInfoArgs {
+  optional string provider = 1;
+  repeated KeyValuePair purchaseArguments = 2;
+  repeated PayVaultBuyItemInfo items = 3;
+}
+
+message PayVaultBuyItemInfo {
+  optional string itemKey = 1;
+  repeated ObjectProperty payload = 2;
+}
+
+message  PayVaultPaymentInfoOutput {
+  repeated KeyValuePair providerArguments = 1;
 }
 
 // Generic exception
