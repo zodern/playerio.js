@@ -14,6 +14,27 @@ message ServerEndpoint {
   optional int32 port = 2;
 }
 
+// Connect
+message ConnectArgs {
+  optional string gameId = 1;
+  optional string connectionId = 2;
+  optional string userId = 3;
+  optional string auth = 4;
+  optional string partnerId = 5;
+  repeated string playerInsightSegments = 6;
+  optional string clientAPI = 7;
+  repeated KeyValuePair clientInfo = 8;
+}
+
+message ConnectOuput {
+  optional string token = 1;
+  optional string userId = 2;
+  optional bool showBranding = 3;
+  optional string gameFSRedirectMap = 4;
+  optional string partnerId = 5;
+  optional PlayerInsightState playerInsightState = 6;
+}
+
 // SimpleConnect
 message SimpleConnectArgs {
   optional string gameId = 1;
